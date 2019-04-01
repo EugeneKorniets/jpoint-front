@@ -9,45 +9,76 @@
 
 				<div class="main-page__main-block">
 					<ul class="main-list">
-						<li
-							class="main-list__item"
-							v-for="(item, index) in mainList"
-							:key="item.id"
-						>
-							<span class="main-list__rank">{{ index + 1 }}</span>
-							<span class="main-list__nick">{{ item.nickname }}</span>
-							<span class="main-list__points">{{ item.rating }}</span>
-						</li>
+						<transition-group name="main-slide-fade">
+							<li
+								class="main-list__item"
+								v-for="(item, index) in mainList"
+								v-show="isShowMainList"
+								:key="item.id"
+							>
+								<span class="main-list__rank">{{ index + 1 }}</span>
+								<span class="main-list__nick">{{ item.nickname }}</span>
+								<span class="main-list__points">{{ item.rating }}</span>
+							</li>
+						</transition-group>
 					</ul>
 				</div>
 
-				<div class="main-page__additional-block">
-					<ul class="additional-list">
-						<li
-							class="additional-list__item"
-							v-for="(item, index) in additionalList"
-							:key="item.id"
-						>
-							<span class="additional-list__rank">{{ index + 21 }} </span>
-							<span class="additional-list__nick">{{ item.nickname }} </span>
-							<span class="additional-list__points">{{ item.rating }}</span>
-						</li>
-					</ul>
-				</div>
+				<transition-group
+					name="add-slide-fade"
+					tag="div"
+					class="main-page__additional-block"
+				>
+					<div
+						class="main-page__additional-subblock"
+						v-show="isShowMainList"
+						:key="11"
+					>
+						<ul class="additional-list">
+							<li
+								class="additional-list__item"
+								v-for="(item, index) in additionalList1"
+								:key="item.id"
+							>
+								<span class="additional-list__rank">{{ index + 21 }} </span>
+								<span class="additional-list__nick">{{ item.nickname }} </span>
+								<span class="additional-list__points">{{ item.rating }}</span>
+							</li>
+						</ul>
+					</div>
+
+					<div
+						class="main-page__additional-subblock"
+						v-if="isShowMainList"
+						:key="12"
+					>
+						<ul class="additional-list">
+							<li
+								class="additional-list__item"
+								v-for="(item, index) in additionalList2"
+								:key="item.id"
+							>
+								<span class="additional-list__rank">{{ index + 51 }} </span>
+								<span class="additional-list__nick">{{ item.nickname }} </span>
+								<span class="additional-list__points">{{ item.rating }}</span>
+							</li>
+						</ul>
+					</div>
+			</transition-group>
 
 			</div>
 		</transition>
 
 		<transition name="slide-effect">
 			<div
-				class="main-page__skew-wrapper"
+				class="main-page__skew-wrapper main-page__skew-wrapper--column"
 				v-if="isActiveInfo"
 				:key="2"
 			>
-				<h2>Тут будет инфа</h2>
+				<h2>Конкурс</h2>
+				<p>Участвуйте в конкрусе и получайте призы!</p>
 			</div>
 		</transition>
-
 
 		<button @click="toggleBlock" style="position: absolute;top: 50px; left:50px">Переключить</button>
 	</div>
@@ -164,19 +195,34 @@
 
 				isActiveTable: false,
 
-				isActiveInfo: true
+				isActiveInfo: true,
+
+				isShowMainList: false
       }
 		},
 
 		computed: {
-      additionalList: function () {
+      additionalList1: function () {
         let list =[]
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 30; i++) {
+          let item = {
+            id: 30 + i,
+            nickname: 'Иванов Виталий',
+            rating: 63 - i
+					}
+          list.push(item)
+        }
+        return list
+      },
+
+      additionalList2: function () {
+        let list =[]
+        for (let i = 30; i < 60; i++) {
           let item = {
             id: 60 + i,
             nickname: 'Иванов Виталий',
             rating: 63 - i
-					}
+          }
           list.push(item)
         }
         return list
@@ -189,13 +235,19 @@
           this.isActiveTable = false
 					setTimeout(() => {
             this.isActiveInfo = true
-					}, 300)
+					}, 380)
+          setTimeout(() => {
+            this.isShowMainList = false
+          }, 850)
 				}
         if (this.isActiveInfo) {
           this.isActiveInfo = false
           setTimeout(() => {
             this.isActiveTable = true
-          }, 300)
+          }, 380)
+          setTimeout(() => {
+            this.isShowMainList = true
+          }, 850)
         }
 			}
 		}
@@ -224,6 +276,10 @@
 			transform: skew(-20deg);
 			background-color: white;
 			box-sizing: border-box;
+
+			&--column {
+				flex-direction: column;
+			}
 		}
 
 		&__main-block {
@@ -232,7 +288,12 @@
 		}
 
 		&__additional-block {
+			display: flex;
 			width: 56.11413%;
+
+			& div {
+				width: 50%;
+			}
 		}
 	}
 
@@ -316,14 +377,15 @@
 	.slide-effect {
 
 		&-enter {
-			transform: skew(-20deg) translateX(2000px);
+			transform: skew(0) translateX(2000px);
 
 			&-active {
 				transition: transform 0.3s;
+				animation: skew-slide-enter  0.5s ease-in;
 			}
 
 			&-to {
-				transform: skew(-20deg) translateX(0);
+				//transform: skew(-20deg) translateX(0);
 			}
 		}
 
@@ -332,11 +394,70 @@
 
 			&-active {
 				transition: transform 0.3s;
+				animation: skew-slide-leave  0.5s ease-out;
 			}
 
 			&-to {
-				transform: skew(-20deg) translateX(-2000px);
+				//transform: skew(-20deg) translateX(-2000px);
 			}
 		}
+	}
+	
+	@keyframes skew-slide-enter {
+		from {
+			transform: skew(-20deg) translateX(2000px);
+		}
+		50% {
+			transform: skew(-20deg) translateX(0);
+		}
+		60% {
+			transform: skew(-19deg) translateX(0);
+		}
+		80% {
+			transform: skew(-19deg) translateX(0);
+		}
+		100% {
+			transform: skew(-20deg) translateX(0);
+		}
+	}
+	@keyframes skew-slide-leave {
+		from {
+			transform: skew(-20deg) translateX(0);
+		}
+		10% {
+			transform: skew(-21deg) translateX(0);
+		}
+		50% {
+			transform: skew(-20deg) translateX(0);
+		}
+		100% {
+			transform: skew(-20deg) translateX(-2000px);
+		}
+	}
+
+	.main-slide-fade-enter-active {
+		@for $i from 1 to 21 {
+			&:nth-child(#{$i}) {
+				transition: all #{$i * 0.1}s ease;
+			}
+		}
+	}
+
+	.main-slide-fade-enter {
+		transform: translateX(20px);
+		opacity: 0;
+	}
+
+	.add-slide-fade-enter-active {
+		@for $i from 1 to 3 {
+			&:nth-child(#{$i}) {
+				transition: all #{$i}s ease 0.3s;
+			}
+		}
+	}
+
+	.add-slide-fade-enter {
+		transform: translateX(10px);
+		opacity: 0;
 	}
 </style>
