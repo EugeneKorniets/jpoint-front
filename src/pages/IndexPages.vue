@@ -1,36 +1,55 @@
 <template>
 	<div class="main-page">
-		<div class="main-page__skew-wrapper">
+		<transition name="slide-effect">
+			<div
+				class="main-page__skew-wrapper"
+				v-if="isActiveTable"
+				:key="1"
+			>
 
-			<div class="main-page__main-block">
-				<ul class="main-list">
-					<li
-						class="main-list__item"
-						v-for="(item, index) in mainList"
-						:key="item.id"
-					>
-						<span class="main-list__rank">{{ index + 1 }}</span>
-						<span class="main-list__nick">{{ item.nickname }}</span>
-						<span class="main-list__points">{{ item.rating }}</span>
-					</li>
-				</ul>
+				<div class="main-page__main-block">
+					<ul class="main-list">
+						<li
+							class="main-list__item"
+							v-for="(item, index) in mainList"
+							:key="item.id"
+						>
+							<span class="main-list__rank">{{ index + 1 }}</span>
+							<span class="main-list__nick">{{ item.nickname }}</span>
+							<span class="main-list__points">{{ item.rating }}</span>
+						</li>
+					</ul>
+				</div>
+
+				<div class="main-page__additional-block">
+					<ul class="additional-list">
+						<li
+							class="additional-list__item"
+							v-for="(item, index) in additionalList"
+							:key="item.id"
+						>
+							<span class="additional-list__rank">{{ index + 21 }} </span>
+							<span class="additional-list__nick">{{ item.nickname }} </span>
+							<span class="additional-list__points">{{ item.rating }}</span>
+						</li>
+					</ul>
+				</div>
+
 			</div>
+		</transition>
 
-			<div class="main-page__additional-block">
-				<ul class="additional-list">
-					<li
-						class="additional-list__item"
-						v-for="(item, index) in additionalList"
-						:key="item.id"
-					>
-						<span class="additional-list__rank">{{ index + 21 }} </span>
-						<span class="additional-list__nick">{{ item.nickname }} </span>
-						<span class="additional-list__points">{{ item.rating }}</span>
-					</li>
-				</ul>
+		<transition name="slide-effect">
+			<div
+				class="main-page__skew-wrapper"
+				v-if="isActiveInfo"
+				:key="2"
+			>
+				<h2>Тут будет инфа</h2>
 			</div>
+		</transition>
 
-		</div>
+
+		<button @click="toggleBlock" style="position: absolute;top: 50px; left:50px">Переключить</button>
 	</div>
 </template>
 
@@ -141,7 +160,11 @@
             nickname: 'Сидоров Петр',
             rating: 64
           }
-				]
+				],
+
+				isActiveTable: false,
+
+				isActiveInfo: true
       }
 		},
 
@@ -158,16 +181,37 @@
         }
         return list
       }
+		},
+
+		methods: {
+      toggleBlock () {
+        if (this.isActiveTable) {
+          this.isActiveTable = false
+					setTimeout(() => {
+            this.isActiveInfo = true
+					}, 300)
+				}
+        if (this.isActiveInfo) {
+          this.isActiveInfo = false
+          setTimeout(() => {
+            this.isActiveTable = true
+          }, 300)
+        }
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
 	.main-page {
-		width: 100vw;
-		height: 100vh;
-		min-width: 1440px;
-		min-height: 788px;
+		width: 1920px;
+		height: 1080px;
 		background-color: #005aab;
 		overflow: hidden;
 
@@ -265,6 +309,34 @@
 
 		&__points {
 			display: block;
+		}
+	}
+
+	// animation effect
+	.slide-effect {
+
+		&-enter {
+			transform: skew(-20deg) translateX(2000px);
+
+			&-active {
+				transition: transform 0.3s;
+			}
+
+			&-to {
+				transform: skew(-20deg) translateX(0);
+			}
+		}
+
+		&-leave {
+			transform: skew(-20deg) translateX(0);
+
+			&-active {
+				transition: transform 0.3s;
+			}
+
+			&-to {
+				transform: skew(-20deg) translateX(-2000px);
+			}
 		}
 	}
 </style>
