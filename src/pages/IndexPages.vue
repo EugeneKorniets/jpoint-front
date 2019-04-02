@@ -167,7 +167,7 @@
 			loadList () {
         return new Promise((resolve, reject) => {
           axios({
-            url: `${server.host}${server.endpoints.list}`,
+            url: `${server.host}${server.endpoints.results}`,
             method: 'GET'
           })
             .then((response) => {
