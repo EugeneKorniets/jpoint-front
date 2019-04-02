@@ -23,135 +23,22 @@
 		</header>
 
 		<main class="admin-page__content">
-			<form
-				class="border p-4"
-				@submit.prevent="addNewMember"
-			>
-				<h3 class="mb-4">Добавить нового участника</h3>
+			<app-menu/>
 
-				<div class="form-group">
-					<label class="d-block">
-						<span class="d-block m-2">Nickname</span>
-						<input
-							class="form-control"
-							type="text"
-							placeholder="Nickname"
-							required
-							v-model="newMemberNickname"
-						>
-					</label>
-				</div>
-
-				<div class="form-group">
-					<label class="d-block">
-						<span class="d-block m-2">Фамилия</span>
-						<input
-							class="form-control"
-							type="text"
-							placeholder="Фамилия"
-							required
-							v-model="newMemberSurname"
-						>
-					</label>
-				</div>
-
-				<div class="form-group">
-					<label class="d-block">
-						<span class="d-block m-2">Имя</span>
-						<input
-							class="form-control"
-							type="text"
-							placeholder="Имя"
-							required
-							v-model="newMemberMiddleName"
-						>
-					</label>
-				</div>
-
-				<div class="form-group">
-					<label class="d-block">
-						<span class="d-block m-2">Отчество</span>
-						<input
-							class="form-control"
-							type="text"
-							placeholder="Отчество"
-							v-model="newMemberLastName"
-						>
-					</label>
-				</div>
-
-				<div class="form-group">
-					<label class="d-block">
-						<span class="d-block m-2">Email</span>
-						<input
-							class="form-control"
-							type="email"
-							placeholder="Email"
-							required
-							v-model="newMemberMail"
-						>
-					</label>
-				</div>
-
-				<div class="form-group">
-					<label class="d-block">
-						<span class="d-block m-2">Тел</span>
-						<input
-							class="form-control"
-							type="tel"
-							placeholder="Тел"
-							required
-							v-model="newMemberPhone"
-						>
-					</label>
-				</div>
-
-				<div class="form-group">
-					<label class="d-block">
-						<span class="d-block m-2">Баллы</span>
-						<input
-							class="form-control"
-							type="number"
-							placeholder="Баллы"
-							v-model="newMemberPoints"
-						>
-					</label>
-				</div>
-
-				<button type="submit" class="btn btn-primary">Добавить</button>
-			</form>
+			<router-view/>
 		</main>
 	</div>
 </template>
 
 <script>
+	import AppMenu from '../components/AppMenu'
+
   export default {
     name: "Admin",
 
-		data: () => {
-      return {
-        newMemberNickname: '',
-
-				newMemberSurname: '',
-
-				newMemberMiddleName: '',
-
-				newMemberLastName: '',
-
-				newMemberMail: '',
-
-				newMemberPhone: '',
-
-				newMemberPoints: 0
-			}
-		},
-
-		methods: {
-      addNewMember () {
-        // eslint-disable-next-line
-        console.log(`Submit add member form: ${this.newMemberNickname}, ${this.newMemberFullName}, ${this.newMemberMail}, ${this.newMemberPhone}, ${this.newMemberPoints}`)
-			}
-		}
+		components: {
+      AppMenu
+    }
   }
 </script>
 
