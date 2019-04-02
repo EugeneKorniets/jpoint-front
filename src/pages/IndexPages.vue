@@ -1,6 +1,9 @@
 <template>
 	<div class="main-page">
-		<div class="main-page__logo">
+		<div
+			class="main-page__logo"
+			@click="toggleBlock"
+		>
 			<svg width="217px" height="102px" viewBox="0 0 217 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 					<g id="Табло" transform="translate(-67.000000, -48.000000)">
@@ -29,7 +32,7 @@
 						<transition-group name="main-slide-fade">
 							<li
 								class="main-list__item"
-								v-for="(item, index) in mainList"
+								v-for="(item, index) in computedMainList"
 								v-show="isShowMainList"
 								:key="item.id"
 							>
@@ -54,7 +57,7 @@
 						<ul class="additional-list">
 							<li
 								class="additional-list__item"
-								v-for="(item, index) in additionalList1"
+								v-for="(item, index) in computedAdditionalList1"
 								:key="item.id"
 							>
 								<span class="additional-list__rank">{{ index + 21 }} </span>
@@ -72,7 +75,7 @@
 						<ul class="additional-list">
 							<li
 								class="additional-list__item"
-								v-for="(item, index) in additionalList2"
+								v-for="(item, index) in computedAdditionalList2"
 								:key="item.id"
 							>
 								<span class="additional-list__rank">{{ index + 51 }} </span>
@@ -96,119 +99,19 @@
 				<p>Участвуйте в конкрусе и получайте призы!</p>
 			</div>
 		</transition>
-
-		<button @click="toggleBlock" style="position: absolute;top: 300px; left:50px">Переключить</button>
 	</div>
 </template>
 
 <script>
+	import axios from 'axios'
+	import server from '../config/server'
+
 	export default {
 		name: "IndexPage",
 
 		data: function () {
       return {
-        mainList: [
-					{
-            id: 1,
-						nickname: 'Константинопольский Константин Константинович',
-						rating: 100
-					},
-          {
-            id: 2,
-            nickname: 'Петров Иван',
-            rating: 99
-          },
-          {
-            id: 3,
-            nickname: 'Сидоров Петр',
-            rating: 98
-          },
-          {
-            id: 4,
-            nickname: 'Иванов Петр',
-            rating: 96
-          },
-          {
-            id: 5,
-            nickname: 'Петров Петр',
-            rating: 95
-          },
-          {
-            id: 6,
-            nickname: 'Сидоров Петр',
-            rating: 91
-          },
-          {
-            id: 7,
-            nickname: 'Иванов Петр',
-            rating: 87
-          },
-          {
-            id: 8,
-            nickname: 'Петров Петр',
-            rating: 83
-          },
-          {
-            id: 9,
-            nickname: 'Сидоров Петр',
-            rating: 80
-          },
-          {
-            id: 10,
-            nickname: 'Иванов Петр',
-            rating: 78
-          },
-          {
-            id: 11,
-            nickname: 'Петров Петр',
-            rating: 76
-          },
-          {
-            id: 12,
-            nickname: 'Сидоров Петр',
-            rating: 76
-          },
-          {
-            id: 13,
-            nickname: 'Иванов Петр',
-            rating: 75
-          },
-          {
-            id: 14,
-            nickname: 'Петров Петр',
-            rating: 73
-          },
-          {
-            id: 15,
-            nickname: 'Петров Петр',
-            rating: 72
-          },
-          {
-            id: 16,
-            nickname: 'Иванов Петр',
-            rating: 70
-          },
-          {
-            id: 17,
-            nickname: 'Сидоров Петр',
-            rating: 69
-          },
-          {
-            id: 18,
-            nickname: 'Петров Петр',
-            rating: 69
-          },
-          {
-            id: 19,
-            nickname: 'Иванов Петр',
-            rating: 68
-          },
-          {
-            id: 20,
-            nickname: 'Сидоров Петр',
-            rating: 64
-          }
-				],
+        mainList: [],
 
 				isActiveTable: false,
 
@@ -223,27 +126,37 @@
 		},
 
 		computed: {
-      additionalList1: function () {
-        let list =[]
-        for (let i = 0; i < 30; i++) {
-          let item = {
-            id: 30 + i,
-            nickname: 'Иванов Виталий',
-            rating: 63 - i
-					}
+			computedMainList: function () {
+        let list = []
+        for (let i = 0; i < 20; i++) {
+          let item = {}
+          item.id = this.mainList[i] ? this.mainList[i].id : i + 0.1
+					item.nickname = this.mainList[i] ? this.mainList[i].nickname : ''
+					item.rating = this.mainList[i] ? this.mainList[i].score : ''
+          list.push(item)
+        }
+        return list
+			},
+
+      computedAdditionalList1: function () {
+        let list = []
+        for (let i = 20; i < 50; i++) {
+          let item = {}
+          item.id = this.mainList[i] ? this.mainList[i].id : i + 0.1
+          item.nickname = this.mainList[i] ? this.mainList[i].nickname : ''
+          item.rating = this.mainList[i] ? this.mainList[i].score : ''
           list.push(item)
         }
         return list
       },
 
-      additionalList2: function () {
-        let list =[]
-        for (let i = 30; i < 60; i++) {
-          let item = {
-            id: 60 + i,
-            nickname: 'Иванов Виталий',
-            rating: 63 - i
-          }
+      computedAdditionalList2: function () {
+        let list = []
+        for (let i = 50; i < 80; i++) {
+          let item = {}
+          item.id = this.mainList[i] ? this.mainList[i].id : i + 0.1
+          item.nickname = this.mainList[i] ? this.mainList[i].nickname : ''
+          item.rating = this.mainList[i] ? this.mainList[i].score : ''
           list.push(item)
         }
         return list
@@ -251,6 +164,22 @@
 		},
 
 		methods: {
+			loadList () {
+        return new Promise((resolve, reject) => {
+          axios({
+            url: `${server.host}${server.endpoints.list}`,
+            method: 'GET'
+          })
+            .then((response) => {
+              this.mainList = response.data
+							resolve(response)
+            })
+            .catch((err) => {
+              reject(err)
+            })
+				})
+			},
+
       toggleBlock () {
         if (this.isActiveTable) {
           this.isActiveTable = false
@@ -273,6 +202,7 @@
 			},
 
 			recursiveTimeout () {
+        this.loadList()
         if (this.isActiveInfo) {
           setTimeout(() => {
             this.toggleBlock()
