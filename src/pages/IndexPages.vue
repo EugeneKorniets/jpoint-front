@@ -214,7 +214,11 @@
 
 				isActiveInfo: true,
 
-				isShowMainList: false
+				isShowMainList: false,
+
+				timeoutInfo: 5000,
+
+				timeoutTable: 20000
       }
 		},
 
@@ -266,7 +270,25 @@
             this.isShowMainList = true
           }, 850)
         }
+			},
+
+			recursiveTimeout () {
+        if (this.isActiveInfo) {
+          setTimeout(() => {
+            this.toggleBlock()
+            this.recursiveTimeout()
+          }, this.timeoutInfo)
+				} else {
+          setTimeout(() => {
+            this.toggleBlock()
+            this.recursiveTimeout()
+					}, this.timeoutTable)
+				}
 			}
+		},
+
+		mounted () {
+      this.recursiveTimeout()
 		}
 	}
 </script>
@@ -445,6 +467,7 @@
 			transform: skew(-20deg) translateX(0);
 		}
 	}
+
 	@keyframes skew-slide-leave {
 		from {
 			transform: skew(-20deg) translateX(0);
