@@ -26,7 +26,7 @@
 					type="text"
 					placeholder="Фамилия"
 					required
-					v-model="newMemberSurname"
+					v-model="newMemberLastName"
 				>
 			</label>
 		</div>
@@ -39,19 +39,7 @@
 					type="text"
 					placeholder="Имя"
 					required
-					v-model="newMemberMiddleName"
-				>
-			</label>
-		</div>
-
-		<div class="form-group">
-			<label class="d-block">
-				<span class="d-block m-2">Отчество</span>
-				<input
-					class="form-control"
-					type="text"
-					placeholder="Отчество"
-					v-model="newMemberLastName"
+					v-model="newMemberFirstName"
 				>
 			</label>
 		</div>
@@ -78,18 +66,8 @@
 					placeholder="Тел"
 					required
 					v-model="newMemberPhone"
-				>
-			</label>
-		</div>
-
-		<div class="form-group">
-			<label class="d-block">
-				<span class="d-block m-2">Баллы</span>
-				<input
-					class="form-control"
-					type="number"
-					placeholder="Баллы"
-					v-model="newMemberPoints"
+					minlength="11"
+					maxlength="11"
 				>
 			</label>
 		</div>
@@ -99,6 +77,9 @@
 </template>
 
 <script>
+	import axios from 'axios'
+	import server from '../config/server'
+
   export default {
     name: "AddNewUser",
 
@@ -106,18 +87,44 @@
       return {
         newMemberNickname: '',
 
-        newMemberSurname: '',
-
-        newMemberMiddleName: '',
+        newMemberFirstName: '',
 
         newMemberLastName: '',
 
         newMemberMail: '',
 
-        newMemberPhone: '',
-
-        newMemberPoints: 0
+        newMemberPhone: ''
       }
-    }
+    },
+
+		methods: {
+      addNewMember () {
+        let data = {
+          nickname: this.newMemberNickname,
+					name: this.newMemberFirstName,
+					surname: this.newMemberLastName,
+					email: this.newMemberMail,
+					phone: this.newMemberPhone
+        }
+        return new Promise((resolve, reject) => {
+          axios({
+						url: `${server.host}${server.endpoints.create}`,
+						method: 'POST',
+						data: data
+					})
+						.then((response) => {
+              this.newMemberNickname = ''
+              this.newMemberFirstName = ''
+              this.newMemberLastName = ''
+              this.newMemberMail = ''
+              this.newMemberPhone = ''
+							resolve(response)
+						})
+						.catch((err) => {
+							reject(err)
+						})
+				})
+			}
+		}
   }
 </script>
