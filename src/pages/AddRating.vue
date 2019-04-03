@@ -128,15 +128,25 @@
 				</div>
 			</div>
 		</form>
+		<app-notification
+			:error="error"
+			:notification="notification"
+			@close-event="clearError"
+		></app-notification>
 	</div>
 </template>
 
 <script>
 	import axios from 'axios'
 	import server from '../config/server'
+	import AppNotification from '../components/AppNotification'
 
   export default {
     name: "AddRating",
+
+		components: {
+      AppNotification
+    },
 
 		data () {
       return {
@@ -156,7 +166,11 @@
 
 				currentScore: '',
 
-				relevantSearchList: []
+				relevantSearchList: [],
+
+				error: '',
+
+				notification: ''
 			}
 		},
 
@@ -172,13 +186,14 @@
 							resolve(response)
 						})
 						.catch((err) => {
+							this.error = `Ошибка загрузки списка участников. ${err}`
 							reject(err)
 						})
 				})
 			},
 
 			setCurrentMember (member) {
-        this.searchString = member.nickname
+        this.searchString = `${member.surname} ${member.name}`
         this.currentId = member.id
 				this.currentNickname = member.nickname
 				this.currentLastName = member.surname
@@ -206,10 +221,15 @@
 						data: data
           })
             .then((response) => {
+              this.notification = `Данные об участнике обновлены`
+							setTimeout(() => {
+								this.notification = ''
+							}, 2500)
               this.clearForm()
               resolve(response)
             })
             .catch((err) => {
+              this.error = `Ошибка обновления данных участника. ${err}`
               reject(err)
             })
         })
@@ -225,6 +245,10 @@
         this.currentPhone = ''
         this.currentScore = ''
         this.relevantSearchList = []
+			},
+
+      clearError () {
+        this.error = ''
 			}
 		},
 

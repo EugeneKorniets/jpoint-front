@@ -75,15 +75,26 @@
 			type="submit"
 			class="btn btn-primary"
 		>Добавить</button>
+
+		<app-notification
+			:error="error"
+			:notification="notification"
+			@close-event="clearError"
+		></app-notification>
 	</form>
 </template>
 
 <script>
 	import axios from 'axios'
 	import server from '../config/server'
+	import AppNotification from '../components/AppNotification'
 
   export default {
     name: "AddNewUser",
+
+		components: {
+      AppNotification
+		},
 
     data: () => {
       return {
@@ -95,7 +106,11 @@
 
         newMemberMail: '',
 
-        newMemberPhone: ''
+        newMemberPhone: '',
+
+				error: '',
+
+				notification: ''
       }
     },
 
@@ -115,6 +130,10 @@
 						data: data
 					})
 						.then((response) => {
+              this.notification = `Добавлен новый участник`
+              setTimeout(() => {
+                this.notification = ''
+              }, 2500)
               this.newMemberNickname = ''
               this.newMemberFirstName = ''
               this.newMemberLastName = ''
@@ -123,9 +142,14 @@
 							resolve(response)
 						})
 						.catch((err) => {
+							this.error = `Ошибка добавления нового участника. ${err}`
 							reject(err)
 						})
 				})
+			},
+
+			clearError () {
+        this.error = ''
 			}
 		}
   }
