@@ -12,7 +12,6 @@
 					class="form-control"
 					type="text"
 					placeholder="Nickname"
-					required
 					v-model="newMemberNickname"
 				>
 			</label>

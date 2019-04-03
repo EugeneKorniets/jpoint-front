@@ -37,7 +37,7 @@
 								:key="item.id"
 							>
 								<span class="main-list__rank">{{ index + 1 }}</span>
-								<span class="main-list__nick">{{ item.nickname }}</span>
+								<span class="main-list__nick">{{ item.nickname ? item.nickname : item.lastName + ' ' + item.firstName }}</span>
 								<span class="main-list__points">{{ item.rating }}</span>
 							</li>
 						</transition-group>
@@ -61,7 +61,7 @@
 								:key="item.id"
 							>
 								<span class="additional-list__rank">{{ index + 21 }} </span>
-								<span class="additional-list__nick">{{ item.nickname }} </span>
+								<span class="main-list__nick">{{ item.nickname ? item.nickname : item.lastName + ' ' + item.firstName }}</span>
 								<span class="additional-list__points">{{ item.rating }}</span>
 							</li>
 						</ul>
@@ -79,7 +79,7 @@
 								:key="item.id"
 							>
 								<span class="additional-list__rank">{{ index + 51 }} </span>
-								<span class="additional-list__nick">{{ item.nickname }} </span>
+								<span class="main-list__nick">{{ item.nickname ? item.nickname : item.lastName + ' ' + item.firstName }}</span>
 								<span class="additional-list__points">{{ item.rating }}</span>
 							</li>
 						</ul>
@@ -132,6 +132,8 @@
           let item = {}
           item.id = this.mainList[i] ? this.mainList[i].id : i + 0.1
 					item.nickname = this.mainList[i] ? this.mainList[i].nickname : ''
+					item.lastName = this.mainList[i] ? this.mainList[i].surname : ''
+					item.firstName = this.mainList[i] ? this.mainList[i].name : ''
 					item.rating = this.mainList[i] ? this.mainList[i].score : ''
           list.push(item)
         }
@@ -144,6 +146,8 @@
           let item = {}
           item.id = this.mainList[i] ? this.mainList[i].id : i + 0.1
           item.nickname = this.mainList[i] ? this.mainList[i].nickname : ''
+          item.lastName = this.mainList[i] ? this.mainList[i].surname : ''
+          item.firstName = this.mainList[i] ? this.mainList[i].name : ''
           item.rating = this.mainList[i] ? this.mainList[i].score : ''
           list.push(item)
         }
@@ -156,6 +160,8 @@
           let item = {}
           item.id = this.mainList[i] ? this.mainList[i].id : i + 0.1
           item.nickname = this.mainList[i] ? this.mainList[i].nickname : ''
+          item.lastName = this.mainList[i] ? this.mainList[i].surname : ''
+          item.firstName = this.mainList[i] ? this.mainList[i].name : ''
           item.rating = this.mainList[i] ? this.mainList[i].score : ''
           list.push(item)
         }
@@ -181,6 +187,7 @@
 			},
 
       toggleBlock () {
+        this.loadList()
         if (this.isActiveTable) {
           this.isActiveTable = false
 					setTimeout(() => {
@@ -202,7 +209,6 @@
 			},
 
 			recursiveTimeout () {
-        this.loadList()
         if (this.isActiveInfo) {
           setTimeout(() => {
             this.toggleBlock()

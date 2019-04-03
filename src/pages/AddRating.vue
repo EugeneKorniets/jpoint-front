@@ -4,14 +4,22 @@
 
 		<div class="form-group mb-5 position-relative">
 			<label class="d-block">
-				<span class="d-block m-2">Поиск по никнейму</span>
-				<input
-					class="form-control"
-					type="text"
-					placeholder="Nickname"
-					required
-					v-model="searchString"
-				>
+				<span class="d-block m-2">Поиск по фамилии или имени</span>
+				<div class="input-group mb-3">
+					<input
+						class="form-control"
+						type="text"
+						required
+						v-model="searchString"
+					>
+					<div class="input-group-append">
+						<button
+							class="input-group-text"
+							v-if="searchString.length"
+							@click="clearForm"
+						>X</button>
+					</div>
+				</div>
 			</label>
 			<ul
 				class="drop-down__list border"
@@ -22,7 +30,7 @@
 					v-for="item in relevantSearchList"
 					@click="setCurrentMember(item)"
 					:key="item.id"
-				>{{ item.nickname }}</li>
+				>{{ item.surname + ' ' + item.name }}</li>
 			</ul>
 		</div>
 
@@ -39,7 +47,6 @@
 							class="form-control"
 							type="text"
 							placeholder="Nickname"
-							required
 							v-model="currentNickname"
 						>
 					</label>
@@ -112,7 +119,7 @@
 							class="form-control"
 							type="number"
 							min="0"
-							max="100"
+							max="62"
 							placeholder="Баллы"
 							required
 							v-model="currentScore"
@@ -199,21 +206,25 @@
 						data: data
           })
             .then((response) => {
-              this.searchString = ''
-              this.currentId = ''
-              this.currentNickname = ''
-              this.currentLastName = ''
-              this.currentFirstName = ''
-              this.currentMail = ''
-              this.currentPhone = ''
-              this.currentScore = ''
-              this.relevantSearchList = []
+              this.clearForm()
               resolve(response)
             })
             .catch((err) => {
               reject(err)
             })
         })
+			},
+
+			clearForm () {
+        this.searchString = ''
+        this.currentId = ''
+        this.currentNickname = ''
+        this.currentLastName = ''
+        this.currentFirstName = ''
+        this.currentMail = ''
+        this.currentPhone = ''
+        this.currentScore = ''
+        this.relevantSearchList = []
 			}
 		},
 
