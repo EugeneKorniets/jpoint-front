@@ -7,11 +7,11 @@
 
 		<div class="form-group">
 			<label class="d-block">
-				<span class="d-block m-2">Nickname</span>
+				<span class="d-block m-2">Никнейм</span>
 				<input
 					class="form-control"
 					type="text"
-					placeholder="Nickname"
+					placeholder="Никнейм"
 					v-model="newMemberNickname"
 				>
 			</label>

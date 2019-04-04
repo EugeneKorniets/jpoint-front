@@ -23,7 +23,14 @@
 		</header>
 
 		<main class="admin-page__content">
-			<app-menu/>
+			<div class="admin-page__panel">
+				<app-menu/>
+				<a
+					class="btn btn-primary"
+					href="/"
+					target="_blank"
+				>Открыть табло в новой вкладке</a>
+			</div>
 
 			<router-view/>
 		</main>
@@ -73,6 +80,12 @@
 			& svg {
 				width: 100%;
 			}
+		}
+
+		&__panel {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
 		}
 	}
 </style>

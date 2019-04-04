@@ -1,6 +1,6 @@
 <template>
 	<div class="border p-4">
-		<h3 class="mb-4">Начислить баллы</h3>
+		<h3 class="mb-4">Редактировать участника</h3>
 
 		<div class="form-group mb-5 position-relative">
 			<label class="d-block">
@@ -42,11 +42,11 @@
 			<div class="col-6">
 				<div class="form-group">
 					<label class="d-block">
-						<span class="d-block m-2">Nickname</span>
+						<span class="d-block m-2">Никнейм</span>
 						<input
 							class="form-control"
 							type="text"
-							placeholder="Nickname"
+							placeholder="Никнейм"
 							v-model="currentNickname"
 						>
 					</label>

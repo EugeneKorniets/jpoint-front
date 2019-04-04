@@ -12,14 +12,7 @@
 				class="nav-link"
 				active-class="active"
 				:to="{name: 'AddRating'}"
-			>Начислить баллы</router-link>
-		</li>
-		<li class="nav-item">
-			<a
-				class="nav-link"
-				href="/"
-				target="_blank"
-			>Открыть табло в новой вкладке</a>
+			>Редактировать участника</router-link>
 		</li>
 	</ul>
 </template>
