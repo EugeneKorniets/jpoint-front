@@ -27,7 +27,7 @@
 					v-for="item in relevantSearchList"
 					@click="setCurrentMember(item)"
 					:key="item.id"
-				>{{ item.surname + ' ' + item.name }}</li>
+				>{{ item.surname + ' ' + item.name }} ({{ item.nickname }})</li>
 			</ul>
 		</div>
 
