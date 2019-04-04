@@ -203,6 +203,7 @@
 			},
 
       updateMemberData () {
+        this.error = ''
         return new Promise((resolve, reject) => {
           let data = {
             id: this.currentId,
