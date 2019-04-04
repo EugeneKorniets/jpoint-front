@@ -96,7 +96,12 @@
 				:key="2"
 			>
 				<div class="info-slide">
-					<h2 class="info-slide__heading">Конкурс</h2>
+					<h2 class="info-slide__heading">Конкурс &mdash; участвуй, решай, побеждай!</h2>
+					<div class="info-slide__image-wrapper">
+						<div class="info-slide__card info-slide__card--1"></div>
+						<div class="info-slide__card info-slide__card--2"></div>
+						<div class="info-slide__card info-slide__card--3"></div>
+					</div>
 					<div class="info-slide__wrapper">
 						<p class="info-slide__main-text-block">За наибольшее количество решенных задач вы получите Подарочную карту Спортмастера на 10 000 р.</p>
 						<p class="info-slide__main-text-block">Если вы окажетесь на втором и третьем место в нашей турнирной таблице, вы получите Подарочную карту Спортмастера на 5 000 р.</p>
@@ -475,6 +480,37 @@
 		&__heading {
 			font-size: 54px;
 			text-align: center;
+		}
+
+		&__wrapper {
+
+		}
+
+		&__image-wrapper {
+			display: flex;
+			justify-content: center;
+			margin: 80px 0;
+			transform: skew(20deg);
+		}
+
+		&__card {
+			width: 280px;
+			height: 182px;
+			margin: 0 66px;
+			background-repeat: no-repeat;
+			background-size: 100%;
+
+			&--1 {
+				background-image: url("../assets/image/group-2@3x.png");
+			}
+
+			&--2 {
+				background-image: url("../assets/image/group-3@3x.png");
+			}
+
+			&--3 {
+				background-image: url("../assets/image/group-4@3x.png");
+			}
 		}
 
 		&__main-text-block {
