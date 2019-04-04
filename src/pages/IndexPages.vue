@@ -588,7 +588,7 @@
 		}
 
 		&__image {
-			width: 150px;
+			width: 180px;
 			margin: 0 10px;
 			padding: 10px 24px;
 
