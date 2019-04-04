@@ -193,6 +193,7 @@
 			},
 
 			setCurrentMember (member) {
+        this.error = ''
         this.searchString = `${member.surname} ${member.name}`
         this.currentId = member.id
 				this.currentNickname = member.nickname

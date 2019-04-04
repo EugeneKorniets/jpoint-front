@@ -116,6 +116,7 @@
 
 		methods: {
       addNewMember () {
+        this.error = ''
         let data = {
           nickname: this.newMemberNickname,
 					name: this.newMemberFirstName,
