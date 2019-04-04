@@ -21,10 +21,7 @@
 					</div>
 				</div>
 			</label>
-			<ul
-				class="drop-down__list border"
-				v-if="!currentId && searchString.length"
-			>
+			<ul class="drop-down__list border">
 				<li
 					class="drop-down__item border-top"
 					v-for="item in relevantSearchList"
@@ -36,7 +33,6 @@
 
 		<form
 			class="border m-1 p-4 row"
-			v-show="currentId"
 			@submit.prevent="updateMemberData"
 		>
 			<div class="col-6">
@@ -107,8 +103,9 @@
 				</div>
 
 				<button
-					type="submit"
 					class="btn btn-primary"
+					type="submit"
+					v-show="currentId"
 				>Применить</button>
 			</div>
 			<div class="col-6">
@@ -131,7 +128,7 @@
 		<app-notification
 			:error="error"
 			:notification="notification"
-			@close-event="clearError"
+			@close-event="clearNotification"
 		></app-notification>
 	</div>
 </template>
@@ -226,7 +223,6 @@
 							setTimeout(() => {
 								this.notification = ''
 							}, 2500)
-              this.clearForm()
               resolve(response)
             })
             .catch((err) => {
@@ -248,14 +244,17 @@
         this.relevantSearchList = []
 			},
 
-      clearError () {
+      clearNotification () {
         this.error = ''
+        this.notification = ''
 			}
 		},
 
 		watch: {
       searchString () {
-        this.searchMember()
+        if (this.searchString.length) {
+          this.searchMember()
+				}
 			}
 		}
   }
@@ -273,6 +272,7 @@
 			list-style: none;
 			border-radius: 0.25rem;
 			background-color: white;
+			z-index: 1;
 		}
 
 		&__item {

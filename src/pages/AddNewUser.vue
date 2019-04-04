@@ -79,7 +79,7 @@
 		<app-notification
 			:error="error"
 			:notification="notification"
-			@close-event="clearError"
+			@close-event="clearNotification"
 		></app-notification>
 	</form>
 </template>
@@ -149,8 +149,9 @@
 				})
 			},
 
-			clearError () {
+			clearNotification () {
         this.error = ''
+        this.notification = ''
 			}
 		}
   }
