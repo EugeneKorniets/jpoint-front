@@ -123,6 +123,22 @@
 						>
 					</label>
 				</div>
+				<div class="form-group">
+					<span class="d-block m-2 mt-4">Управление активностью</span>
+
+					<input
+						id="active"
+						class="custom-control-input"
+						type="checkbox"
+						v-model="currentActive"
+					>
+					<label
+						class="d-block ml-4 custom-control-label"
+						for="active"
+					>
+						{{ currentActive ? 'Активен' : 'Неактивен' }}
+					</label>
+				</div>
 			</div>
 		</form>
 		<app-notification
@@ -163,6 +179,8 @@
 
 				currentScore: '',
 
+				currentActive: '',
+
 				relevantSearchList: [],
 
 				error: '',
@@ -199,6 +217,7 @@
 				this.currentMail = member.email
 				this.currentPhone = member.phone
 				this.currentScore = member.score
+				this.currentActive = member.active
         this.relevantSearchList = []
 			},
 
@@ -212,7 +231,8 @@
 						name: this.currentFirstName,
 						email: this.currentMail,
 						phone: this.currentPhone,
-						score: this.currentScore
+						score: this.currentScore,
+						active: this.currentActive
 					}
           axios({
             url: `${server.host}${server.endpoints.update}`,
@@ -242,6 +262,7 @@
         this.currentMail = ''
         this.currentPhone = ''
         this.currentScore = ''
+        this.currentActive = ''
         this.relevantSearchList = []
 			},
 
