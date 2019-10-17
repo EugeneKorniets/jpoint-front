@@ -1,4 +1,4 @@
-# jpoint-front
+# sm-quiz-web-client
 
 ## Project setup
 ```
