@@ -1,5 +1,5 @@
 export default {
-  host: 'http://localhost:8080/',
+  host: '/api/',
   endpoints: {
     list: 'admin/list',
     create: 'admin/create',

@@ -3,7 +3,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // pages
-import IndexPage from '../pages/IndexPages'
+import IndexPage from '../pages/IndexPage'
 import AdminPage from '../pages/AdminPage'
 import AddNewUser from '../pages/AddNewUser'
 import AddRating from '../pages/AddRating'
