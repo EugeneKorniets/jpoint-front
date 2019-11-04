@@ -5,21 +5,21 @@
     <div class="form-group mb-5 position-relative">
       <label class="d-block">
         <span class="d-block m-2">Поиск по фамилии или имени</span>
-        <div class="input-group mb-3">
+        <span class="input-group mb-3">
           <input
             class="form-control"
             type="text"
             required
             v-model="searchString"
           >
-          <div class="input-group-append">
+          <span class="input-group-append">
             <button
               class="input-group-text"
               v-if="searchString.length"
               @click="clearForm"
             >X</button>
-          </div>
-        </div>
+          </span>
+        </span>
       </label>
       <ul class="drop-down__list border">
         <li
@@ -151,11 +151,12 @@
 
 <script>
   import axios from 'axios'
-  import server from '../config/server'
-  import AppNotification from '../components/AppNotification'
+  import api from '../api/api'
+
+  import AppNotification from '../components/app-notification'
 
   export default {
-    name: "AddRating",
+    name: "add-rating-page",
 
     components: {
       AppNotification
@@ -193,7 +194,7 @@
       searchMember () {
         return new Promise((resolve, reject) => {
           axios({
-            url: `${server.host}${server.endpoints.list}?term=${this.searchString}`,
+            url: `${api.host}${api.endpoints.list}?term=${this.searchString}`,
             method: 'GET'
           })
             .then((response) => {
@@ -235,7 +236,7 @@
             active: this.currentActive
           }
           axios({
-            url: `${server.host}${server.endpoints.update}`,
+            url: `${api.host}${api.endpoints.update}`,
             method: 'POST',
             data: data
           })

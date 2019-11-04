@@ -3,10 +3,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // pages
-import IndexPage from '../pages/IndexPage'
-import AdminPage from '../pages/AdminPage'
-import AddNewUser from '../pages/AddNewUser'
-import AddRating from '../pages/AddRating'
+import MainPage from '../pages/main-page'
+import AdminPage from '../pages/admin-page'
+import AddNewUserPage from '../pages/add-new-user-page'
+import AddRatingPage from '../pages/add-rating-page'
 
 Vue.use(Router)
 
@@ -14,23 +14,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: IndexPage,
-      name: 'IndexPage'
+      component: MainPage,
+      name: 'MainPage'
     },
     {
       path: '/admin/',
       component: AdminPage,
-      name: 'Adminpage',
+      name: 'AdminPage',
       children: [
         {
           path: 'add-new-user/',
-          component: AddNewUser,
-          name: 'AddNewUser'
+          component: AddNewUserPage,
+          name: 'AddNewUserPage'
         },
         {
           path: 'add-rating/',
-          component: AddRating,
-          name: 'AddRating'
+          component: AddRatingPage,
+          name: 'AddRatingPage'
         },
       ]
     }

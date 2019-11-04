@@ -4,14 +4,14 @@
       <router-link
         class="nav-link"
         active-class="active"
-        :to="{name: 'AddNewUser'}"
+        :to="{ name: 'AddNewUserPage' }"
       >Добавить участника</router-link>
     </li>
     <li class="nav-item">
       <router-link
         class="nav-link"
         active-class="active"
-        :to="{name: 'AddRating'}"
+        :to="{ name: 'AddRatingPage' }"
       >Редактировать участника</router-link>
     </li>
   </ul>
@@ -22,9 +22,3 @@
     name: "app-menu"
   }
 </script>
-
-<style>
-  .menu {
-    display: flex;
-  }
-</style>

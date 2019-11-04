@@ -86,11 +86,12 @@
 
 <script>
   import axios from 'axios'
-  import server from '../config/server'
-  import AppNotification from '../components/AppNotification'
+  import api from '../api/api'
+
+  import AppNotification from '../components/app-notification'
 
   export default {
-    name: "AddNewUser",
+    name: "add-new-user-page",
 
     components: {
       AppNotification
@@ -126,7 +127,7 @@
         }
         return new Promise((resolve, reject) => {
           axios({
-            url: `${server.host}${server.endpoints.create}`,
+            url: `${api.host}${api.endpoints.create}`,
             method: 'POST',
             data: data
           })

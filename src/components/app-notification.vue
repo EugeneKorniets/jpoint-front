@@ -1,5 +1,5 @@
 <template>
-  <div class="notification">
+  <div class="app-notification">
     <transition name="fade">
       <div
         class="alert"
@@ -42,7 +42,7 @@
 </script>
 
 <style lang="scss">
-  .notification {
+  .app-notification {
     position: fixed;
     top: 84px;
     right: 50px;
