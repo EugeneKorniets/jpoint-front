@@ -21,7 +21,10 @@
           </span>
         </span>
       </label>
-      <ul class="drop-down__list border">
+      <ul
+        class="drop-down__list border"
+        v-if="isRelevantListVisible"
+      >
         <li
           class="drop-down__item border-top"
           v-for="item in relevantSearchList"
@@ -166,6 +169,8 @@
       return {
         searchString: '',
 
+        isRelevantListVisible: false,
+
         currentId: '',
 
         currentNickname: '',
@@ -209,8 +214,8 @@
       },
 
       setCurrentMember (member) {
-        this.error = ''
         this.searchString = `${member.surname} ${member.name}`
+        this.error = ''
         this.currentId = member.id
         this.currentNickname = member.nickname
         this.currentLastName = member.surname
@@ -219,7 +224,10 @@
         this.currentPhone = member.phone
         this.currentScore = member.score
         this.currentActive = member.active
-        this.relevantSearchList = []
+        this.$nextTick(() => {
+          this.isRelevantListVisible = false
+          this.relevantSearchList = []
+        })
       },
 
       updateMemberData () {
@@ -276,6 +284,7 @@
     watch: {
       searchString () {
         if (this.searchString.length) {
+          this.isRelevantListVisible = true
           this.searchMember()
         }
       }
